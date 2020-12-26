@@ -62,7 +62,7 @@ namespace NascarRace
             {
                 var position = Grid.FindIndex(a => a.Name == racer.Name);
 
-                Console.WriteLine($"{position + 1}. {racer.Name}, TotalTime: {TimeSpanToString(racer.TotalTime)} {racer.Car.Tires.TireType}");
+                Console.WriteLine($"{position + 1}. {racer.Name}, TotalTime: {TimeSpanToString(racer.TotalTime)} {racer.Car.Tires.ToString()}");
             }
         }
 

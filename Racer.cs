@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using NascarRace.Tires;
 
 namespace NascarRace
 {
@@ -15,14 +16,7 @@ namespace NascarRace
         public TimeSpan TotalTime { get; set; }
         private Cube Cube;
 
-        public Racer(int id, string name)
-        {
-            ID = id;
-            Name = name;
-            Cube = new Cube();
-            Car = CreateDefaultCar();
-        }
-        public Racer(int id, string name, Tires.TireTypeEnum tires)
+        public Racer(int id, string name, ITires tires)
         {
             ID = id;
             Name = name;
@@ -30,13 +24,9 @@ namespace NascarRace
             Car = CreateDefaultCarWithTires(tires);
         }
 
-        private Car CreateDefaultCar()
+        private Car CreateDefaultCarWithTires(ITires tires)
         {
-            return new Car(300, 300, new Tires(), 150, 0);
-        }
-        private Car CreateDefaultCarWithTires(Tires.TireTypeEnum tires)
-        {
-            return new Car(300, 300, new Tires{TireType = tires}, 150, 0);
+            return new Car(300, 300, tires, 150, 0);
         }
 
 
@@ -52,6 +42,15 @@ namespace NascarRace
             TotalTime += lapTime;
 
             return lapTime;
+        }
+
+        private double ApplyTireProperties(double rawLapTime)
+        {
+            var tires = Car.Tires;
+
+            //var p = tires.
+
+            return rawLapTime;
         }
 
         private double ApplyActualFormIndex(double rawLapTime)

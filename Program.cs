@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NascarRace.Tires;
 
 namespace NascarRace
 {
@@ -14,9 +15,9 @@ namespace NascarRace
 
             var cube1 = new Cube();
 
-            var racer1 = new Racer(1,"Hanes",Tires.TireTypeEnum.Hard);
-            var racer2 = new Racer(2, "Lucie", Tires.TireTypeEnum.Medium);
-            var racer3 = new Racer(2, "Tomáš", Tires.TireTypeEnum.Soft);
+            var racer1 = new Racer(1,"Hanes", new HardTires());
+            var racer2 = new Racer(2, "Lucie", new MediumTires());
+            var racer3 = new Racer(2, "Tomáš", new SoftTires());
 
             grid.Add(racer1);
             grid.Add(racer2);
