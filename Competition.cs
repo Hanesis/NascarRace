@@ -9,9 +9,6 @@ namespace NascarRace
         public string Name { get; set; }
         public Circuit Circuit { get; set; }
         public List<Racer> Grid{ get; set; }
-
-        public Dictionary<Racer, TimeSpan> GridPosition { get; set; }
-
         public Competition(string name, Circuit circuit, List<Racer> grid)
         {
             Name = name;
@@ -21,16 +18,9 @@ namespace NascarRace
 
         public void StartCompetition()
         {
-            Console.WriteLine("Competition {0} intro", Name);
+            PrintStartingIntro();
 
-            Console.WriteLine("On the grid are:");
-
-            foreach (var racer in Grid)
-            {
-                Console.WriteLine(racer.Name);
-            }
-
-            Console.WriteLine("Starting Race");
+            Console.WriteLine("Starting The Race!");
             
             var laps = 1;
             do
@@ -42,6 +32,18 @@ namespace NascarRace
                 laps++;
 
             } while (laps != Circuit.TotalRounds);
+        }
+
+        private void PrintStartingIntro()
+        {
+            Console.WriteLine("Competition {0} intro", Name);
+
+            Console.WriteLine("Racers on the grid are:");
+
+            foreach (var racer in Grid)
+            {
+                Console.WriteLine($"{racer.ID} - {racer.Name} ({racer.Car.Tires})");
+            }
         }
 
         private void DriveGrid()
@@ -62,7 +64,7 @@ namespace NascarRace
             {
                 var position = Grid.FindIndex(a => a.Name == racer.Name);
 
-                Console.WriteLine($"{position + 1}. {racer.Name}, TotalTime: {TimeSpanToString(racer.TotalTime)} {racer.Car.Tires} - {racer.Car.Tires.TireWear}%");
+                Console.WriteLine($"{position + 1}. {racer.ID} - {racer.Name}, TotalTime: {TimeSpanToString(racer.TotalTime)} {racer.Car.Tires} - {racer.Car.Tires.TireWear}%");
             }
         }
 
