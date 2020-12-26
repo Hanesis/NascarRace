@@ -4,13 +4,17 @@ using System.Text;
 
 namespace NascarRace.Tires
 {
-    interface ITires
+    class Tires
     {
-        double TireWear { get; set; }
-        int UsedLaps { get; set; }
-        int SpeedModifier { get; set; }
+        public double TireWear { get; set; }
+        public int UsedLaps { get; set; }
+        public int SpeedModifier { get; set; }
 
-        string ToString();
+        public override string ToString()
+        {
+            throw new NotImplementedException();
+        }
 
+        
     }
 }

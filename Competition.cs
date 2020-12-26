@@ -35,7 +35,7 @@ namespace NascarRace
             var laps = 1;
             do
             {
-                DriveAllGrid();
+                DriveGrid();
                 PrintActualLapsTimes(laps);
                 PrintActualStandings(laps);
 
@@ -44,7 +44,7 @@ namespace NascarRace
             } while (laps != Circuit.TotalRounds);
         }
 
-        private void DriveAllGrid()
+        private void DriveGrid()
         {
             foreach (var racer in Grid)
             {
@@ -62,7 +62,7 @@ namespace NascarRace
             {
                 var position = Grid.FindIndex(a => a.Name == racer.Name);
 
-                Console.WriteLine($"{position + 1}. {racer.Name}, TotalTime: {TimeSpanToString(racer.TotalTime)} {racer.Car.Tires.ToString()}");
+                Console.WriteLine($"{position + 1}. {racer.Name}, TotalTime: {TimeSpanToString(racer.TotalTime)} {racer.Car.Tires} - {racer.Car.Tires.TireWear}%");
             }
         }
 

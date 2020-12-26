@@ -16,7 +16,7 @@ namespace NascarRace
         public TimeSpan TotalTime { get; set; }
         private Cube Cube;
 
-        public Racer(int id, string name, ITires tires)
+        public Racer(int id, string name, Tires.Tires tires)
         {
             ID = id;
             Name = name;
@@ -24,7 +24,7 @@ namespace NascarRace
             Car = CreateDefaultCarWithTires(tires);
         }
 
-        private Car CreateDefaultCarWithTires(ITires tires)
+        private Car CreateDefaultCarWithTires(Tires.Tires tires)
         {
             return new Car(300, 300, tires, 150, 0);
         }
@@ -37,6 +37,10 @@ namespace NascarRace
             //lap = ApplyActualFormIndex(lap);
             
             var lapTime = RawToTimeSpan(lap);
+
+
+
+            Car.UseTire();
 
             LapTime = lapTime;
             TotalTime += lapTime;

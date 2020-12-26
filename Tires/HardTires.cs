@@ -1,18 +1,15 @@
 ﻿namespace NascarRace.Tires
 {
-    class HardTires : ITires
+    class HardTires : Tires
     {
-        public double TireWear { get; set; }
-        public int UsedLaps { get; set; }
-        public int SpeedModifier { get; set; }
-
         public HardTires()
         {
             TireWear = 100;
             UsedLaps = 0;
-            SpeedModifier = 0;
+            SpeedModifier = 25;
         }
-        string ITires.ToString()
+
+        public override string ToString()
         {
             return "H";
         }
