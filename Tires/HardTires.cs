@@ -12,6 +12,10 @@
             UsedLaps = 0;
             SpeedModifier = 0;
         }
+        string ITires.ToString()
+        {
+            return "H";
+        }
     }
 
 }

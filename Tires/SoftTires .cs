@@ -1,4 +1,6 @@
-﻿namespace NascarRace.Tires
+﻿using System;
+
+namespace NascarRace.Tires
 {
     class SoftTires: ITires
     {
@@ -11,6 +13,11 @@
             TireWear = 100;
             UsedLaps = 0;
             SpeedModifier = 20;
+        }
+
+        string ITires.ToString()
+        {
+            return "S";
         }
     }
 }

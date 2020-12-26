@@ -19,7 +19,7 @@ namespace NascarRace
             MaxFuel = maxFuel;
             ActualFuel = actualFuel;
             Tires = tires;
-            MaxSpeed = maxSpeed;
+            MaxSpeed = maxSpeed + tires.SpeedModifier;
             PerformanceReduction = performanceReduction;
         }
         

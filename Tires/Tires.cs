@@ -10,6 +10,7 @@ namespace NascarRace.Tires
         int UsedLaps { get; set; }
         int SpeedModifier { get; set; }
 
-        
+        string ToString();
+
     }
 }

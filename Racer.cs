@@ -34,7 +34,7 @@ namespace NascarRace
         {
             var lap = GetBaseRawLapTime(circuit.Length);
             
-            lap = ApplyActualFormIndex(lap);
+            //lap = ApplyActualFormIndex(lap);
             
             var lapTime = RawToTimeSpan(lap);
 
@@ -43,16 +43,6 @@ namespace NascarRace
 
             return lapTime;
         }
-
-        private double ApplyTireProperties(double rawLapTime)
-        {
-            var tires = Car.Tires;
-
-            //var p = tires.
-
-            return rawLapTime;
-        }
-
         private double ApplyActualFormIndex(double rawLapTime)
         {
             var formIndex = Cube.Roll10To16();//lower is better
