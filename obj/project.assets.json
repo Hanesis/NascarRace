@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ja.linhart\\source\\repos\\NascarRace\\NascarRace.csproj",
+      "projectUniqueName": "C:\\Users\\ja.linhart\\Documents\\GitHub\\NascarRace\\NascarRace.csproj",
       "projectName": "NascarRace",
-      "projectPath": "C:\\Users\\ja.linhart\\source\\repos\\NascarRace\\NascarRace.csproj",
+      "projectPath": "C:\\Users\\ja.linhart\\Documents\\GitHub\\NascarRace\\NascarRace.csproj",
       "packagesPath": "C:\\Users\\ja.linhart\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ja.linhart\\source\\repos\\NascarRace\\obj\\",
+      "outputPath": "C:\\Users\\ja.linhart\\Documents\\GitHub\\NascarRace\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

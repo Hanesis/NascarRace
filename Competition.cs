@@ -10,7 +10,7 @@ namespace NascarRace
         public Circuit Circuit { get; set; }
         public List<Racer> Grid{ get; set; }
 
-        public Dictionary<Racer, TimeSpan> ActualLapTimes { get; set; }
+        public Dictionary<Racer, TimeSpan> GridPosition { get; set; }
 
         public Competition(string name, Circuit circuit, List<Racer> grid)
         {
@@ -31,24 +31,59 @@ namespace NascarRace
             }
 
             Console.WriteLine("Starting Race");
+            
+
+            int laps = 0;
+            do
+            {
+                DriveAllGrid();
+                PrintActualLapsTimes();
+                PrintActualStandings();
+
+                laps++;
+
+            } while (laps != Circuit.TotalRounds);
 
 
-            ActualLapTimes = new Dictionary<Racer, TimeSpan>();
+        }
+
+        private void DriveAllGrid()
+        {
+            foreach (var racer in Grid)
+            {
+                racer.Drive(Circuit);
+            }
+        }
+
+        private void PrintActualStandings()
+        {
+            Console.WriteLine("Total times are:");
+
+            Grid.Sort((x, y) => x.TotalTime.CompareTo(y.TotalTime));
 
             foreach (var racer in Grid)
             {
-                var lapTime = racer.Drive(Circuit);
+                var position = Grid.FindIndex(a => a.Name == racer.Name);
 
-                ActualLapTimes.Add(racer, lapTime);
+                Console.WriteLine($"{position + 1}. {racer.Name}, LapTime: {TimeSpanToString(racer.TotalTime)}");
             }
+        }
 
+        private void PrintActualLapsTimes()
+        {
             Console.WriteLine("Last lap times are:");
 
-            foreach (var racersLap in ActualLapTimes)
+            foreach (var racer in Grid)
             {
-                Console.WriteLine($"Racer: {racersLap.Key.Name}, LapTime: {racersLap.Value}");
+                Console.WriteLine($"Racer: {racer.Name}, LapTime: {TimeSpanToString(racer.LapTime)}");
             }
+        }
 
+        private static string TimeSpanToString(TimeSpan lapTime)
+        {
+            var t = $@"Time : {lapTime:mm\:ss\.fff}";
+
+            return t;
         }
     }
 }

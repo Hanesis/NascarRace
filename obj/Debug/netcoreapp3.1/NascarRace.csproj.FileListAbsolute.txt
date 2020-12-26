@@ -11,3 +11,16 @@ C:\Users\ja.linhart\source\repos\NascarRace\obj\Debug\netcoreapp3.1\NascarRace.c
 C:\Users\ja.linhart\source\repos\NascarRace\obj\Debug\netcoreapp3.1\NascarRace.dll
 C:\Users\ja.linhart\source\repos\NascarRace\obj\Debug\netcoreapp3.1\NascarRace.pdb
 C:\Users\ja.linhart\source\repos\NascarRace\obj\Debug\netcoreapp3.1\NascarRace.genruntimeconfig.cache
+C:\Users\ja.linhart\Documents\GitHub\NascarRace\bin\Debug\netcoreapp3.1\NascarRace.exe
+C:\Users\ja.linhart\Documents\GitHub\NascarRace\bin\Debug\netcoreapp3.1\NascarRace.deps.json
+C:\Users\ja.linhart\Documents\GitHub\NascarRace\bin\Debug\netcoreapp3.1\NascarRace.runtimeconfig.json
+C:\Users\ja.linhart\Documents\GitHub\NascarRace\bin\Debug\netcoreapp3.1\NascarRace.runtimeconfig.dev.json
+C:\Users\ja.linhart\Documents\GitHub\NascarRace\bin\Debug\netcoreapp3.1\NascarRace.dll
+C:\Users\ja.linhart\Documents\GitHub\NascarRace\bin\Debug\netcoreapp3.1\NascarRace.pdb
+C:\Users\ja.linhart\Documents\GitHub\NascarRace\obj\Debug\netcoreapp3.1\NascarRace.csprojAssemblyReference.cache
+C:\Users\ja.linhart\Documents\GitHub\NascarRace\obj\Debug\netcoreapp3.1\NascarRace.AssemblyInfoInputs.cache
+C:\Users\ja.linhart\Documents\GitHub\NascarRace\obj\Debug\netcoreapp3.1\NascarRace.AssemblyInfo.cs
+C:\Users\ja.linhart\Documents\GitHub\NascarRace\obj\Debug\netcoreapp3.1\NascarRace.csproj.CoreCompileInputs.cache
+C:\Users\ja.linhart\Documents\GitHub\NascarRace\obj\Debug\netcoreapp3.1\NascarRace.dll
+C:\Users\ja.linhart\Documents\GitHub\NascarRace\obj\Debug\netcoreapp3.1\NascarRace.pdb
+C:\Users\ja.linhart\Documents\GitHub\NascarRace\obj\Debug\netcoreapp3.1\NascarRace.genruntimeconfig.cache
