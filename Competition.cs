@@ -32,19 +32,16 @@ namespace NascarRace
 
             Console.WriteLine("Starting Race");
             
-
-            int laps = 0;
+            var laps = 1;
             do
             {
                 DriveAllGrid();
-                PrintActualLapsTimes();
-                PrintActualStandings();
+                PrintActualLapsTimes(laps);
+                PrintActualStandings(laps);
 
                 laps++;
 
             } while (laps != Circuit.TotalRounds);
-
-
         }
 
         private void DriveAllGrid()
@@ -55,9 +52,9 @@ namespace NascarRace
             }
         }
 
-        private void PrintActualStandings()
+        private void PrintActualStandings(int lap)
         {
-            Console.WriteLine("Total times are:");
+            Console.WriteLine($"Standings after {lap} laps are:");
 
             Grid.Sort((x, y) => x.TotalTime.CompareTo(y.TotalTime));
 
@@ -65,13 +62,14 @@ namespace NascarRace
             {
                 var position = Grid.FindIndex(a => a.Name == racer.Name);
 
-                Console.WriteLine($"{position + 1}. {racer.Name}, LapTime: {TimeSpanToString(racer.TotalTime)}");
+                Console.WriteLine($"{position + 1}. {racer.Name}, TotalTime: {TimeSpanToString(racer.TotalTime)} {racer.Car.Tires.TireType}");
             }
         }
 
-        private void PrintActualLapsTimes()
+        private void PrintActualLapsTimes(int lap)
         {
-            Console.WriteLine("Last lap times are:");
+            Console.WriteLine();
+            Console.WriteLine($"Lap {lap} times are:");
 
             foreach (var racer in Grid)
             {
@@ -81,7 +79,7 @@ namespace NascarRace
 
         private static string TimeSpanToString(TimeSpan lapTime)
         {
-            var t = $@"Time : {lapTime:mm\:ss\.fff}";
+            var t = $@"{lapTime:mm\:ss\.fff}";
 
             return t;
         }

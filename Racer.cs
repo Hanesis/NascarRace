@@ -15,17 +15,28 @@ namespace NascarRace
         public TimeSpan TotalTime { get; set; }
         private Cube Cube;
 
-    public Racer(int id, string name, Cube cube)
+        public Racer(int id, string name)
         {
             ID = id;
             Name = name;
-            Cube = cube;
+            Cube = new Cube();
             Car = CreateDefaultCar();
+        }
+        public Racer(int id, string name, Tires.TireTypeEnum tires)
+        {
+            ID = id;
+            Name = name;
+            Cube = new Cube();
+            Car = CreateDefaultCarWithTires(tires);
         }
 
         private Car CreateDefaultCar()
         {
             return new Car(300, 300, new Tires(), 150, 0);
+        }
+        private Car CreateDefaultCarWithTires(Tires.TireTypeEnum tires)
+        {
+            return new Car(300, 300, new Tires{TireType = tires}, 150, 0);
         }
 
 

@@ -7,8 +7,18 @@ namespace NascarRace
     class Tires
     {
         public TireTypeEnum TireType { get; set; }
-        public double TireWear { get; set; }
-        public int TireWearIndex { get; set; }
+        private double TireWear { get; set; }
+        private int TireWearIndex { get; set; }
+
+        public Tires(TireTypeEnum tireType)
+        {
+            TireType = tireType;
+        }
+
+        public Tires()
+        {
+            
+        }
 
         public enum TireTypeEnum
         {
