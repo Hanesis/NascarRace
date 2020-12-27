@@ -53,7 +53,7 @@ namespace NascarRace
 
         private double GetBaseRawLapTime(int lapLength)
         {
-            return lapLength / 1000.0 / Car.MaxSpeed;
+            return lapLength / 1000.0 / Car.ActualMaxSpeed;
         }
         
         private static TimeSpan RawToTimeSpan(double rawLapTime)

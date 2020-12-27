@@ -9,6 +9,7 @@ namespace NascarRace
         public int ActualFuel { get; set; }
         public Tires.Tires Tires { get; set; }
         public double MaxSpeed { get; set; }
+        public double ActualMaxSpeed { get; set; }
         public double PerformanceReduction { get; set; }
 
         public Car(int maxFuel, int actualFuel, Tires.Tires tires, int maxSpeed)
@@ -16,7 +17,8 @@ namespace NascarRace
             MaxFuel = maxFuel;
             ActualFuel = actualFuel;
             Tires = tires;
-            MaxSpeed = maxSpeed + tires.SpeedModifier;
+            MaxSpeed = maxSpeed;
+            ActualMaxSpeed = maxSpeed + tires.SpeedModifier;
         }
 
         public void UseTire()
@@ -27,7 +29,7 @@ namespace NascarRace
                     Tires.TireWear -= 3;
                     break;
                 case MediumTires _:
-                    Tires.TireWear -= 7;
+                    Tires.TireWear -= 9;
                     break;
                 case SoftTires _:
                     Tires.TireWear -= 12;
@@ -35,7 +37,7 @@ namespace NascarRace
             }
 
             PerformanceReduction = Math.Round(Tires.SpeedModifier * (Tires.TireWear / 100)/3,2);
-            MaxSpeed -= Math.Round(PerformanceReduction,2);
+            ActualMaxSpeed -= Math.Round(PerformanceReduction,2);
         }
     }
 }
