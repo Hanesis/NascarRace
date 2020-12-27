@@ -11,12 +11,6 @@ namespace NascarRace.Tires
             SpeedModifier = 45;
         }
 
-        public void UseTire(Tires tire)
-        {
-            tire.TireWear -= 15;
-
-
-        }
         public override string ToString()
         {
             return "S";

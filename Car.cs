@@ -11,13 +11,12 @@ namespace NascarRace
         public double MaxSpeed { get; set; }
         public double PerformanceReduction { get; set; }
 
-        public Car(int maxFuel, int actualFuel, Tires.Tires tires, int maxSpeed, double performanceReduction)
+        public Car(int maxFuel, int actualFuel, Tires.Tires tires, int maxSpeed)
         {
             MaxFuel = maxFuel;
             ActualFuel = actualFuel;
             Tires = tires;
             MaxSpeed = maxSpeed + tires.SpeedModifier;
-            PerformanceReduction = performanceReduction;
         }
 
         public void UseTire()
@@ -35,8 +34,8 @@ namespace NascarRace
                     break;
             }
 
-            var s = Tires.SpeedModifier * (Tires.TireWear / 100)/3;
-            MaxSpeed -= s;
+            PerformanceReduction = Math.Round(Tires.SpeedModifier * (Tires.TireWear / 100)/3,2);
+            MaxSpeed -= Math.Round(PerformanceReduction,2);
         }
     }
 }

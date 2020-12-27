@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata;
 using System.Text;
+using NascarRace.Tires;
 
 namespace NascarRace
 {
@@ -25,13 +27,51 @@ namespace NascarRace
             var laps = 1;
             do
             {
+                Console.Write("PitLaneCommand:");
+                var command = Console.ReadLine();
                 DriveGrid();
+                UsePitLane(command);
                 PrintActualLapsTimes(laps);
                 PrintActualStandings(laps);
 
                 laps++;
 
             } while (laps != Circuit.TotalRounds);
+        }
+
+        private void UsePitLane(string command)
+        {
+            if (command == "") return;
+
+            var pitLane = new PitLane();
+            //91 H 35 - number 91 will use Hard tires and tank 35l of fuel
+            var commandList = command.Split();
+
+            var racerInPitLane = Grid.Find(racer => racer.ID.ToString() == commandList[0]);
+            Tires.Tires newTires = null;
+
+            switch (commandList[1])
+            {
+                case "H":
+                    newTires = new HardTires();
+                    break;
+                case "M":
+                    newTires = new MediumTires();
+                    break;
+                case "S":
+                    newTires = new SoftTires();
+                    break;
+                default: 
+                    Console.Write("Invalid tire type");
+                    break;
+            }
+
+            pitLane.ChangeTires(racerInPitLane,newTires);
+
+            racerInPitLane.LapTime += TimeSpan.FromSeconds(20);
+            racerInPitLane.TotalTime += TimeSpan.FromSeconds(20);
+
+            Console.Write("Racer {0} was in PitLane and has new Tires: {1}", racerInPitLane.Name, newTires);
         }
 
         private void PrintStartingIntro()
@@ -64,7 +104,7 @@ namespace NascarRace
             {
                 var position = Grid.FindIndex(a => a.Name == racer.Name);
 
-                Console.WriteLine($"{position + 1}. {racer.ID} - {racer.Name}, TotalTime: {TimeSpanToString(racer.TotalTime)} {racer.Car.Tires} - {racer.Car.Tires.TireWear}%");
+                Console.WriteLine($"{position + 1}. {racer.ID} - {racer.Name}, TotalTime: {TimeSpanToString(racer.TotalTime)} {racer.Car.Tires} - {racer.Car.Tires.TireWear}% - maxSpeed: {racer.Car.MaxSpeed} - PR: {racer.Car.PerformanceReduction}");
             }
         }
 

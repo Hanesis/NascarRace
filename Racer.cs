@@ -26,7 +26,7 @@ namespace NascarRace
 
         private Car CreateDefaultCarWithTires(Tires.Tires tires)
         {
-            return new Car(300, 300, tires, 150, 0);
+            return new Car(300, 300, tires, 150);
         }
 
 
@@ -37,9 +37,7 @@ namespace NascarRace
             //lap = ApplyActualFormIndex(lap);
             
             var lapTime = RawToTimeSpan(lap);
-
-
-
+            
             Car.UseTire();
 
             LapTime = lapTime;
