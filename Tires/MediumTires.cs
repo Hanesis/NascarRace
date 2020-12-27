@@ -6,7 +6,7 @@
         {
             TireWear = 100;
             UsedLaps = 0;
-            SpeedModifier = 35;
+            SpeedModifier = 32;
         }
 
         public override string ToString()

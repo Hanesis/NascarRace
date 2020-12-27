@@ -34,7 +34,9 @@ namespace NascarRace
                 PrintActualLapsTimes(laps);
                 PrintActualStandings(laps);
 
+
                 laps++;
+
 
             } while (laps != Circuit.TotalRounds);
         }
@@ -50,7 +52,7 @@ namespace NascarRace
             var racerInPitLane = Grid.Find(racer => racer.ID.ToString() == commandList[0]);
             Tires.Tires newTires = null;
 
-            switch (commandList[1])
+            switch (commandList[1].ToUpper())
             {
                 case "H":
                     newTires = new HardTires();
@@ -68,8 +70,8 @@ namespace NascarRace
 
             pitLane.ChangeTires(racerInPitLane,newTires);
 
-            racerInPitLane.LapTime += TimeSpan.FromSeconds(20);
-            racerInPitLane.TotalTime += TimeSpan.FromSeconds(20);
+            racerInPitLane.LapTime += TimeSpan.FromSeconds(30);
+            racerInPitLane.TotalTime += TimeSpan.FromSeconds(30);
 
             Console.Write("Racer {0} was in PitLane and has new Tires: {1}", racerInPitLane.Name, newTires);
         }

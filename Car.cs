@@ -29,15 +29,16 @@ namespace NascarRace
                     Tires.TireWear -= 3;
                     break;
                 case MediumTires _:
-                    Tires.TireWear -= 9;
+                    Tires.TireWear -= 7;
                     break;
                 case SoftTires _:
-                    Tires.TireWear -= 12;
+                    Tires.TireWear -= 11;
                     break;
             }
 
-            PerformanceReduction = Math.Round(Tires.SpeedModifier * (Tires.TireWear / 100)/3,2);
-            ActualMaxSpeed -= Math.Round(PerformanceReduction,2);
+            PerformanceReduction = Math.Round( Tires.SpeedModifier / Tires.TireWear * 5.5, 3);
+            ActualMaxSpeed -= Math.Round(PerformanceReduction,3);
+            ActualMaxSpeed = Math.Round(ActualMaxSpeed,2);
         }
     }
 }

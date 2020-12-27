@@ -8,7 +8,7 @@ namespace NascarRace.Tires
         {
             TireWear = 100;
             UsedLaps = 0;
-            SpeedModifier = 45;
+            SpeedModifier = 38;
         }
 
         public override string ToString()
