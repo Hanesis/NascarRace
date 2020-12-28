@@ -9,6 +9,7 @@ namespace NascarRace.Tires
             TireWear = 100;
             UsedLaps = 0;
             SpeedModifier = 36;
+            IsPunctured = false;
         }
 
         public override string ToString()

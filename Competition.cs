@@ -32,6 +32,7 @@ namespace NascarRace
                 UsePitLane(command);
                 PrintActualLapsTimes(laps);
                 PrintActualStandings(laps);
+                PrintDamageInfo();
                 laps++;
             } while (laps != Circuit.TotalRounds);
 
@@ -111,7 +112,7 @@ namespace NascarRace
             foreach (var racer in Grid)
             {
                 var position = Grid.FindIndex(a => a.Name == racer.Name);
-                Console.WriteLine($"{position + 1}. {racer.ID} - {racer.Name}, TotalTime: {Helper.TimeSpanToString(racer.TotalTime)}, Average Form: {Math.Round(racer.CubeThrows.Average(),2)}, BonusTimeIndex: {Helper.TimeInDoubleToString(racer.BonusTimeIndex)}");
+                Console.WriteLine($"{position + 1}. {racer.ID} - {racer.Name}, TotalTime: {Helper.TimeSpanToString(racer.TotalTime)}, Average Form: {Math.Round(racer.CubeThrows.Average(),2)}, BonusTimeIndex: {Helper.TimeInDoubleToString(racer.PenaltyTimeStack)}");
             }
             Console.ForegroundColor = ConsoleColor.Gray;
         }
@@ -139,8 +140,23 @@ namespace NascarRace
 
             foreach (var racer in Grid)
             {
-                Console.WriteLine($"Racer: {racer.Name}, LapTime: {Helper.TimeSpanToString(racer.LapTime)}");
+                Console.WriteLine($"Racer: {racer.Name}, LapTime: {Helper.TimeSpanToString(racer.LapTime)} ({racer.ActualForm})");
             }
+        }
+
+        private void PrintDamageInfo()
+        {
+            if (Grid.Any(r => r.Car.Tires.IsPunctured))
+            {
+                foreach (var racer in Grid)
+                {
+                    if (!racer.Car.Tires.IsPunctured) continue;
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine($"Racer: {racer.ID} - {racer.Name} has damaged tire!");
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                }
+            }
+            Console.WriteLine();
         }
     }
 }
