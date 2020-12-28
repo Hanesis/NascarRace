@@ -14,6 +14,8 @@ namespace NascarRace
         public int ActualForm { get; set; }
         public TimeSpan LapTime { get; set; }
         public TimeSpan TotalTime { get; set; }
+        public List<double> CubeThrows { get; set; }
+        public double BonusTimeIndex{ get; set; }
         private Cube Cube;
 
         public Racer(int id, string name, Tires.Tires tires)
@@ -22,6 +24,7 @@ namespace NascarRace
             Name = name;
             Cube = new Cube();
             Car = CreateDefaultCarWithTires(tires);
+            CubeThrows = new List<double>();
         }
 
         private Car CreateDefaultCarWithTires(Tires.Tires tires)
@@ -34,9 +37,9 @@ namespace NascarRace
         {
             var lap = GetBaseRawLapTime(circuit.Length);
             
-            //lap = ApplyActualFormIndex(lap);
+            lap = ApplyActualFormIndex(lap);
             
-            var lapTime = RawToTimeSpan(lap);
+            var lapTime = Helper.RawToTimeSpan(lap);
             
             Car.UseTire();
 
@@ -47,18 +50,16 @@ namespace NascarRace
         }
         private double ApplyActualFormIndex(double rawLapTime)
         {
-            var formIndex = Cube.Roll10To16();//lower is better
-            return rawLapTime + formIndex / 10000.0;
+            var formIndex = Cube.Roll(3,8) * 2.5;//lower is better
+            CubeThrows.Add(formIndex);
+            var timeIndex = formIndex / 6000.0;
+            BonusTimeIndex += timeIndex;
+            return rawLapTime + timeIndex;
         }
 
         private double GetBaseRawLapTime(int lapLength)
         {
             return lapLength / 1000.0 / Car.ActualMaxSpeed;
-        }
-        
-        private static TimeSpan RawToTimeSpan(double rawLapTime)
-        {
-            return TimeSpan.FromHours(rawLapTime);
         }
     }
 }

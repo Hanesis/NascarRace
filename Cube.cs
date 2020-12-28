@@ -15,13 +15,9 @@ namespace NascarRace
             CubeSites = 6;
         }
        
-        public int Roll1To6()
+        public int Roll(int min, int max)
         {
-            return Random.Next(1, CubeSites + 1);
-        }
-        public int Roll10To16()
-        {
-            return Random.Next(10, 16);
+            return Random.Next(min, max);
         }
     }
 }

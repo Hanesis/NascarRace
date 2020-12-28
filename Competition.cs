@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using NascarRace.Tires;
@@ -110,7 +111,7 @@ namespace NascarRace
             foreach (var racer in Grid)
             {
                 var position = Grid.FindIndex(a => a.Name == racer.Name);
-                Console.WriteLine($"{position + 1}. {racer.ID} - {racer.Name}, TotalTime: {TimeSpanToString(racer.TotalTime)} ");
+                Console.WriteLine($"{position + 1}. {racer.ID} - {racer.Name}, TotalTime: {Helper.TimeSpanToString(racer.TotalTime)}, Average Form: {Math.Round(racer.CubeThrows.Average(),2)}, BonusTimeIndex: {Helper.TimeInDoubleToString(racer.BonusTimeIndex)}");
             }
             Console.ForegroundColor = ConsoleColor.Gray;
         }
@@ -126,7 +127,7 @@ namespace NascarRace
             foreach (var racer in Grid)
             {
                 var position = Grid.FindIndex(a => a.Name == racer.Name);
-                Console.WriteLine($"{position + 1}. {racer.ID} - {racer.Name}, TotalTime: {TimeSpanToString(racer.TotalTime)} {racer.Car.Tires} - {racer.Car.Tires.TireWear}% - maxSpeed: {racer.Car.ActualMaxSpeed} - PR: {racer.Car.PerformanceReduction}");
+                Console.WriteLine($"{position + 1}. {racer.ID} - {racer.Name}, TotalTime: {Helper.TimeSpanToString(racer.TotalTime)} {racer.Car.Tires} - {racer.Car.Tires.TireWear}% - maxSpeed: {racer.Car.ActualMaxSpeed} - PR: {racer.Car.PerformanceReduction}");
             }
             Console.ForegroundColor = ConsoleColor.Gray;
         }
@@ -138,15 +139,8 @@ namespace NascarRace
 
             foreach (var racer in Grid)
             {
-                Console.WriteLine($"Racer: {racer.Name}, LapTime: {TimeSpanToString(racer.LapTime)}");
+                Console.WriteLine($"Racer: {racer.Name}, LapTime: {Helper.TimeSpanToString(racer.LapTime)}");
             }
-        }
-
-        private static string TimeSpanToString(TimeSpan lapTime)
-        {
-            var t = $@"{lapTime:mm\:ss\.fff}";
-
-            return t;
         }
     }
 }
