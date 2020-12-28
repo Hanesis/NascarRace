@@ -21,8 +21,6 @@ namespace NascarRace
         public void StartCompetition()
         {
             PrintStartingIntro();
-
-            Console.WriteLine("Starting The Race!");
             
             var laps = 1;
             do
@@ -33,12 +31,10 @@ namespace NascarRace
                 UsePitLane(command);
                 PrintActualLapsTimes(laps);
                 PrintActualStandings(laps);
-
-
                 laps++;
-
-
             } while (laps != Circuit.TotalRounds);
+
+            PrintFinalStandings();
         }
 
         private void UsePitLane(string command)
@@ -70,15 +66,22 @@ namespace NascarRace
 
             pitLane.ChangeTires(racerInPitLane,newTires);
 
-            racerInPitLane.LapTime += TimeSpan.FromSeconds(30);
-            racerInPitLane.TotalTime += TimeSpan.FromSeconds(30);
+            racerInPitLane.LapTime += TimeSpan.FromSeconds(Circuit.PitLaneTime);
+            racerInPitLane.TotalTime += TimeSpan.FromSeconds(Circuit.PitLaneTime);
 
-            Console.Write("Racer {0} was in PitLane and has new Tires: {1}", racerInPitLane.Name, newTires);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Racer {0} was in PitLane and has new Tires: {1}", racerInPitLane.Name, newTires);
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         private void PrintStartingIntro()
         {
-            Console.WriteLine("Competition {0} intro", Name);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Competition intro:");
+            Console.WriteLine("Circuit name: {0}", Name);
+            Console.WriteLine("Circuit length: {0}", Circuit.Length);
+            Console.WriteLine("Total round: {0}", Circuit.TotalRounds);
+            Console.ForegroundColor = ConsoleColor.Gray;
 
             Console.WriteLine("Racers on the grid are:");
 
@@ -96,18 +99,36 @@ namespace NascarRace
             }
         }
 
+        private void PrintFinalStandings()
+        {
+            Console.WriteLine($"Final standings are:");
+
+            Grid.Sort((x, y) => x.TotalTime.CompareTo(y.TotalTime));
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+
+            foreach (var racer in Grid)
+            {
+                var position = Grid.FindIndex(a => a.Name == racer.Name);
+                Console.WriteLine($"{position + 1}. {racer.ID} - {racer.Name}, TotalTime: {TimeSpanToString(racer.TotalTime)} ");
+            }
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
+
         private void PrintActualStandings(int lap)
         {
             Console.WriteLine($"Standings after {lap} laps are:");
 
             Grid.Sort((x, y) => x.TotalTime.CompareTo(y.TotalTime));
 
+            Console.ForegroundColor = ConsoleColor.Blue;
+
             foreach (var racer in Grid)
             {
                 var position = Grid.FindIndex(a => a.Name == racer.Name);
-
                 Console.WriteLine($"{position + 1}. {racer.ID} - {racer.Name}, TotalTime: {TimeSpanToString(racer.TotalTime)} {racer.Car.Tires} - {racer.Car.Tires.TireWear}% - maxSpeed: {racer.Car.ActualMaxSpeed} - PR: {racer.Car.PerformanceReduction}");
             }
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         private void PrintActualLapsTimes(int lap)

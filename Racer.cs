@@ -34,7 +34,7 @@ namespace NascarRace
         {
             var lap = GetBaseRawLapTime(circuit.Length);
             
-            lap = ApplyActualFormIndex(lap);
+            //lap = ApplyActualFormIndex(lap);
             
             var lapTime = RawToTimeSpan(lap);
             

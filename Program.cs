@@ -10,7 +10,7 @@ namespace NascarRace
         {
             Console.WriteLine("Preparing Race!");
 
-            var circuit = new Circuit(3000, 25);
+            var circuit = new Circuit(3000, 25, 30);
             var grid = new List<Racer>();
             
             var racer1 = new Racer(55,"Hanes", new HardTires());
