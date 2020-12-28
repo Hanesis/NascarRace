@@ -36,9 +36,7 @@ namespace NascarRace
         public TimeSpan Drive(Circuit circuit)
         {
             var lap = GetBaseRawLapTime(circuit.Length);
-            
             lap = ApplyActualFormIndex(lap);
-            
             var lapTime = Helper.RawToTimeSpan(lap);
             
             Car.UseTire();

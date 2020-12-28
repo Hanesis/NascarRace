@@ -23,7 +23,7 @@ namespace NascarRace
             }
 
             racer.Car.Tires = newTire;
-            racer.Car.ActualMaxSpeed = racer.Car.MaxSpeed + newTire.SpeedModifier;
+            racer.Car.ActualMaxSpeed = racer.Car.BasicSpeed + newTire.SpeedModifier;
             racer.LapTime += TimeSpan.FromSeconds(8);
             racer.TotalTime += TimeSpan.FromSeconds(8);
         }

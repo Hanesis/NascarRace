@@ -8,18 +8,18 @@ namespace NascarRace
         public int MaxFuel { get; set; }
         public int ActualFuel { get; set; }
         public Tires.Tires Tires { get; set; }
-        public double MaxSpeed { get; set; }
+        public double BasicSpeed { get; set; }
         public double ActualMaxSpeed { get; set; }
         public double PerformanceReduction { get; set; }
         public bool IsDnf { get; set; }
 
-        public Car(int maxFuel, int actualFuel, Tires.Tires tires, int maxSpeed)
+        public Car(int maxFuel, int actualFuel, Tires.Tires tires, int basicSpeed)
         {
             MaxFuel = maxFuel;
             ActualFuel = actualFuel;
             Tires = tires;
-            MaxSpeed = maxSpeed;
-            ActualMaxSpeed = maxSpeed + tires.SpeedModifier;
+            BasicSpeed = basicSpeed;
+            ActualMaxSpeed = basicSpeed + tires.SpeedModifier;
             IsDnf = false;
         }
 
@@ -36,7 +36,7 @@ namespace NascarRace
                         Tires.TireWear -= 3;
                         break;
                     case MediumTires _:
-                        Tires.TireWear -= 6;
+                        Tires.TireWear -= 5;
                         break;
                     case SoftTires _:
                         Tires.TireWear -= 9;
@@ -46,6 +46,10 @@ namespace NascarRace
                 PerformanceReduction = Math.Round(Tires.SpeedModifier / Tires.TireWear * 6.5, 3);
                 ActualMaxSpeed -= Math.Round(PerformanceReduction, 3);
                 ActualMaxSpeed = Math.Round(ActualMaxSpeed, 2);
+                if (ActualMaxSpeed < BasicSpeed)
+                {
+                    ActualMaxSpeed = BasicSpeed;
+                }
             }
             else
             {
