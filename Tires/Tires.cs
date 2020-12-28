@@ -21,7 +21,7 @@ namespace NascarRace.Tires
 
             var random = new Random();
             
-            if (!(random.Next(100) > TireWear * 2.5)) return;
+            if (!(random.Next(100) > TireWear * 2.1)) return;
             
             IsPunctured = true;
             TireWear = 1;
