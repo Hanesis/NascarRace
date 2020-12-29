@@ -15,7 +15,7 @@ namespace NascarRace
                     newTire = new HardTires();
                     break;
                 case MediumTires _:
-                    newTire =new MediumTires();
+                    newTire = new MediumTires();
                     break;
                 case SoftTires _:
                     newTire = new SoftTires();
@@ -23,9 +23,23 @@ namespace NascarRace
             }
 
             racer.Car.Tires = newTire;
-            racer.Car.ActualMaxSpeed = racer.Car.BasicSpeed + newTire.SpeedModifier;
             racer.LapTime += TimeSpan.FromSeconds(8);
             racer.TotalTime += TimeSpan.FromSeconds(8);
+        }
+
+        public void LoadFuel(Racer racer, double fuelLoad)
+        {
+            if (racer.Car.ActualFuel + fuelLoad >= racer.Car.MaxFuel)
+            {
+                racer.Car.ActualFuel = racer.Car.MaxFuel;
+            }
+            
+            racer.Car.ActualFuel += fuelLoad;
+
+            var fuelTime = fuelLoad / 4;
+            racer.LapTime += TimeSpan.FromSeconds(fuelTime);
+            racer.TotalTime += TimeSpan.FromSeconds(fuelTime);
+            racer.Car.IsOutOfFuel = false;
         }
     }
 }

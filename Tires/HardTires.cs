@@ -6,7 +6,7 @@
         {
             TireWear = 100;
             UsedLaps = 0;
-            SpeedModifier = 29;
+            SpeedModifier = 28;
             IsPunctured = false;
         }
 

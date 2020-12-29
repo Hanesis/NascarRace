@@ -29,10 +29,10 @@ namespace NascarRace
                 Console.Write("PitLaneCommand:");
                 var command = Console.ReadLine();
                 DriveGrid();
+                PrintDamageInfo();
                 UsePitLane(command);
                 PrintActualLapsTimes(laps);
                 PrintActualStandings(laps);
-                PrintDamageInfo();
                 laps++;
             } while (laps != Circuit.TotalRounds);
 
@@ -45,10 +45,13 @@ namespace NascarRace
 
             var pitLane = new PitLane();
             //91 H 35 - number 91 will use Hard tires and tank 35l of fuel
+            //91 H 0 - number 91 will use Hard tires
+            //91 N 35 - number 91 will tank 35l of fuel
             var commandList = command.Split();
 
             var racerInPitLane = Grid.Find(racer => racer.ID.ToString() == commandList[0]);
-            Tires.Tires newTires = null;
+            
+                Tires.Tires newTires = null;
 
             switch (commandList[1].ToUpper())
             {
@@ -61,24 +64,29 @@ namespace NascarRace
                 case "S":
                     newTires = new SoftTires();
                     break;
+                case "N":
+                    newTires = racerInPitLane.Car.Tires;
+                    break;
                 default: 
                     Console.Write("Invalid tire type");
                     break;
             }
 
             pitLane.ChangeTires(racerInPitLane,newTires);
+            
+            pitLane.LoadFuel(racerInPitLane, Convert.ToDouble(commandList[2]));
 
             racerInPitLane.LapTime += TimeSpan.FromSeconds(Circuit.PitLaneTime);
             racerInPitLane.TotalTime += TimeSpan.FromSeconds(Circuit.PitLaneTime);
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Racer {0} was in PitLane and has new Tires: {1}", racerInPitLane.Name, newTires);
+            Console.WriteLine("Racer {0} was in PitLane New fuel load: {1} Tires: {2}", racerInPitLane.Name, Math.Round(racerInPitLane.Car.ActualFuel), newTires);
             Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         private void PrintStartingIntro()
         {
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("Competition intro:");
             Console.WriteLine("Circuit name: {0}", Name);
             Console.WriteLine("Circuit length: {0}", Circuit.Length);
@@ -128,7 +136,7 @@ namespace NascarRace
             foreach (var racer in Grid)
             {
                 var position = Grid.FindIndex(a => a.Name == racer.Name);
-                Console.WriteLine($"{position + 1}. {racer.ID} - {racer.Name}, TotalTime: {Helper.TimeSpanToString(racer.TotalTime)} {racer.Car.Tires} - {racer.Car.Tires.TireWear}% - maxSpeed: {racer.Car.ActualMaxSpeed} - PR: {racer.Car.PerformanceReduction}");
+                Console.WriteLine($"{position + 1}. {racer.ID} - {racer.Name}, TotalTime: {Helper.TimeSpanToString(racer.TotalTime)} F:{Math.Round(racer.Car.ActualFuel,1)}l {racer.Car.Tires} - {racer.Car.Tires.TireWear}% - maxSpeed: {racer.Car.ActualMaxSpeed} - FSR: {racer.Car.FuelPerformanceReduction}  TSR: {racer.Car.TiresPerformanceReduction}");
             }
             Console.ForegroundColor = ConsoleColor.Gray;
         }
@@ -148,14 +156,22 @@ namespace NascarRace
 
         private void PrintDamageInfo()
         {
-            if (Grid.Any(r => r.Car.Tires.IsPunctured))
+            if (Grid.Any(r => r.Car.Tires.IsPunctured) || Grid.Any(r => r.Car.IsOutOfFuel))
             {
                 foreach (var racer in Grid)
                 {
-                    if (!racer.Car.Tires.IsPunctured) continue;
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine($"Racer: {racer.ID} - {racer.Name} has damaged tire!");
-                    Console.ForegroundColor = ConsoleColor.Gray;
+                    if (racer.Car.Tires.IsPunctured)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine($"Racer: {racer.ID} - {racer.Name} has damaged tire!");
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                    }
+                    if (racer.Car.IsOutOfFuel)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine($"Racer: {racer.ID} - {racer.Name} is out of fuel!");
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                    }
                 }
             }
             Console.WriteLine();
