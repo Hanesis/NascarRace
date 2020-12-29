@@ -5,6 +5,7 @@ namespace NascarRace.Tires
     class Tires
     {
         public double TireWear { get; set; }
+        public int TireWearPer1km { get; set; }
         public int UsedLaps { get; set; }
         public int SpeedModifier { get; set; }
         public bool IsPunctured { get; set; }
@@ -21,7 +22,7 @@ namespace NascarRace.Tires
 
             var random = new Random();
             
-            if (!(random.Next(100) > TireWear * 2.1)) return;
+            if (!(random.Next(100) > TireWear * 2.0)) return;
             
             IsPunctured = true;
             TireWear = 1;

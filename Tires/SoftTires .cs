@@ -8,7 +8,7 @@ namespace NascarRace.Tires
         {
             TireWear = 100;
             UsedLaps = 0;
-            SpeedModifier = 36;
+            SpeedModifier = 37;
             IsPunctured = false;
         }
 

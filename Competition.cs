@@ -138,9 +138,11 @@ namespace NascarRace
             Console.WriteLine();
             Console.WriteLine($"Lap {lap} times are:");
 
+            Grid.Sort((x, y) => x.TotalTime.CompareTo(y.TotalTime));
+
             foreach (var racer in Grid)
             {
-                Console.WriteLine($"Racer: {racer.Name}, LapTime: {Helper.TimeSpanToString(racer.LapTime)} ({racer.ActualForm})");
+                Console.WriteLine($"{racer.ID} - {racer.Name}, LapTime: {Helper.TimeSpanToString(racer.LapTime)} ({racer.ActualForm})");
             }
         }
 
