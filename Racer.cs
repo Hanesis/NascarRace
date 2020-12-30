@@ -40,7 +40,7 @@ namespace NascarRace
 
             ApplyFuelWightSpeedPenalty();
             ApplyTireWearSpeedPenalty();
-            CalculateActualMaxSpeed();
+            CalculateActualMaxSpeed(circuit.Length);
 
             var lapTimeRaw = GetBaseRawLapTime(circuit.Length);
             lapTimeRaw = ApplyActualFormIndex(lapTimeRaw);
@@ -54,16 +54,16 @@ namespace NascarRace
 
         private double ApplyActualFormIndex(double rawLapTime)
         {
-            ActualForm = Cube.Roll(3,8) * 2.5;//lower is better
+            ActualForm = Cube.Roll(3,8) * 1.5;//lower is better
             CubeThrows.Add(ActualForm);
             var penaltyTime = ActualForm / 6000.0;
             PenaltyTimeStack += penaltyTime;
             return rawLapTime + penaltyTime;
         }
-        private void CalculateActualMaxSpeed()
+        private void CalculateActualMaxSpeed(int lapLength)
         {
             Car.ActualMaxSpeed = Car.BasicSpeed + Car.Tires.SpeedModifier - Car.TiresPerformanceReduction - Car.FuelPerformanceReduction;
-            Car.ActualMaxSpeed = Math.Round(Car.ActualMaxSpeed, 2);
+            Car.ActualMaxSpeed = Math.Round(Car.ActualMaxSpeed, 1);
 
             if (Car.ActualMaxSpeed < Car.BasicSpeed)
             {
@@ -77,7 +77,10 @@ namespace NascarRace
 
             if (Car.IsOutOfFuel)
             {
-                Car.ActualMaxSpeed = 50;
+                var minimumFuel = lapLength * Car.FuelUsagePer1Km / 1000;
+                
+                Car.ActualMaxSpeed = Math.Round(Car.ActualFuel / minimumFuel * Car.ActualMaxSpeed,1);
+                Car.ActualFuel = 0.1;
             }
         }
 

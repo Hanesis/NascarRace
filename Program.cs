@@ -13,9 +13,9 @@ namespace NascarRace
             var circuit = new Circuit(3000, 25, 40);
             var grid = new List<Racer>();
 
-            var racer1= new Racer(37, "Thomas", 25, new SoftTires());
-            var racer2 = new Racer(91, "Lucie", 35, new MediumTires());
-            var racer3 = new Racer(55, "Hanes",50, new HardTires());
+            var racer1= new Racer(37, "Thomas", 22, new SoftTires());
+            var racer2 = new Racer(91, "Lucie", 30, new MediumTires());
+            var racer3 = new Racer(55, "Hanes",40, new HardTires());
 
             grid.Add(racer1);
             grid.Add(racer2);

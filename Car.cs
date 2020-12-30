@@ -40,7 +40,6 @@ namespace NascarRace
             if (ActualFuel >= minimumFuel) return;
 
             IsOutOfFuel = true;
-            ActualFuel = 0.1;
         }
 
         public void UseTire(int circuitLength)

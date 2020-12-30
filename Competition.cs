@@ -111,7 +111,7 @@ namespace NascarRace
             foreach (var racer in Grid)
             {
                 var position = Grid.FindIndex(a => a.Name == racer.Name);
-                Console.WriteLine($"{position + 1}. {racer.ID} - {racer.Name}, TotalTime: {Helper.TimeSpanToStringMinutes(racer.TotalTime)} F:{Math.Round(racer.Car.ActualFuel,1)}l {racer.Car.Tires} - {racer.Car.Tires.TireWear}% - maxSpeed: {racer.Car.ActualMaxSpeed} - FSR: {racer.Car.FuelPerformanceReduction}  TSR: {racer.Car.TiresPerformanceReduction}");
+                Console.WriteLine($"{position + 1}. {racer.ID} - {racer.Name}, TotalTime: {Helper.TimeSpanToStringMinutes(racer.TotalTime)} F:{Math.Round(racer.Car.ActualFuel,1)}l - {racer.Car.Tires}:{racer.Car.Tires.TireWear}% = maxSpeed: {racer.Car.ActualMaxSpeed}");
             }
             Console.ForegroundColor = ConsoleColor.Gray;
         }
