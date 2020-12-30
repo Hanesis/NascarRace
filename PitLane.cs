@@ -5,26 +5,39 @@ namespace NascarRace
 {
     class PitLane
     {
-        public void ChangeTires(Racer racer, Tires.Tires newTiresType)
-        {
-            Tires.Tires newTire = null;
+        public TimeSpan PitLaneEnterTime { get; set; }
+        public TimeSpan PitLaneCrewTime { get; set; }
+        public TimeSpan MaintainTime { get; set; }
+        public Tires.Tires NewTires { get; set; }
 
-            switch (newTiresType)
+        public PitLane(int pitLaneTime)
+        {
+            PitLaneEnterTime = TimeSpan.FromSeconds(pitLaneTime);
+        }
+
+        public void ChangeTires(Racer racer, string newTiresType)
+        {
+            NewTires = null;
+
+            switch (newTiresType.ToUpper())
             {
-                case HardTires _:
-                    newTire = new HardTires();
+                case "H":
+                    NewTires = new HardTires();
                     break;
-                case MediumTires _:
-                    newTire = new MediumTires();
+                case "M":
+                    NewTires = new MediumTires();
                     break;
-                case SoftTires _:
-                    newTire = new SoftTires();
+                case "S":
+                    NewTires = new SoftTires();
+                    break;
+                case "N":
+                    NewTires = racer.Car.Tires;
+                    break;
+                default:
+                    Console.Write("Invalid tire type");
                     break;
             }
-
-            racer.Car.Tires = newTire;
-            racer.LapTime += TimeSpan.FromSeconds(8);
-            racer.TotalTime += TimeSpan.FromSeconds(8);
+            racer.Car.Tires = NewTires;
         }
 
         public void LoadFuel(Racer racer, double fuelLoad)
@@ -35,11 +48,27 @@ namespace NascarRace
             }
             
             racer.Car.ActualFuel += fuelLoad;
-
-            var fuelTime = fuelLoad / 4;
-            racer.LapTime += TimeSpan.FromSeconds(fuelTime);
-            racer.TotalTime += TimeSpan.FromSeconds(fuelTime);
             racer.Car.IsOutOfFuel = false;
+
+
+        }
+        public void GetPitLaneTime(Racer racer, double fuelLoad)
+        {
+            var cube = new Cube();
+            
+            PitLaneCrewTime = TimeSpan.FromSeconds(cube.Roll(5, 9));
+            MaintainTime = TimeSpan.FromSeconds(fuelLoad / 1.5);
+
+            if (MaintainTime <= TimeSpan.FromSeconds(8))
+            {
+                racer.LapTime += TimeSpan.FromSeconds(8) + PitLaneCrewTime + PitLaneEnterTime;
+                racer.TotalTime += TimeSpan.FromSeconds(8) + PitLaneCrewTime + PitLaneEnterTime;
+            }
+            else
+            {
+                racer.LapTime += MaintainTime + PitLaneCrewTime + PitLaneEnterTime;
+                racer.TotalTime += MaintainTime + PitLaneCrewTime + PitLaneEnterTime;
+            }
         }
     }
 }

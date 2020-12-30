@@ -34,7 +34,7 @@ namespace NascarRace
                 PrintActualLapsTimes(laps);
                 PrintActualStandings(laps);
                 laps++;
-            } while (laps != Circuit.TotalRounds);
+            } while (laps != Circuit.TotalRounds + 1);
 
             PrintFinalStandings();
         }
@@ -43,44 +43,19 @@ namespace NascarRace
         {
             if (command == "") return;
 
-            var pitLane = new PitLane();
             //91 H 35 - number 91 will use Hard tires and tank 35l of fuel
             //91 H 0 - number 91 will use Hard tires
             //91 N 35 - number 91 will tank 35l of fuel
             var commandList = command.Split();
 
             var racerInPitLane = Grid.Find(racer => racer.ID.ToString() == commandList[0]);
-            
-                Tires.Tires newTires = null;
 
-            switch (commandList[1].ToUpper())
-            {
-                case "H":
-                    newTires = new HardTires();
-                    break;
-                case "M":
-                    newTires = new MediumTires();
-                    break;
-                case "S":
-                    newTires = new SoftTires();
-                    break;
-                case "N":
-                    newTires = racerInPitLane.Car.Tires;
-                    break;
-                default: 
-                    Console.Write("Invalid tire type");
-                    break;
-            }
-
-            pitLane.ChangeTires(racerInPitLane,newTires);
-            
-            pitLane.LoadFuel(racerInPitLane, Convert.ToDouble(commandList[2]));
-
-            racerInPitLane.LapTime += TimeSpan.FromSeconds(Circuit.PitLaneTime);
-            racerInPitLane.TotalTime += TimeSpan.FromSeconds(Circuit.PitLaneTime);
+            Circuit.PitLane.ChangeTires(racerInPitLane, commandList[1]);
+            Circuit.PitLane.LoadFuel(racerInPitLane, Convert.ToDouble(commandList[2]));
+            Circuit.PitLane.GetPitLaneTime(racerInPitLane, Convert.ToDouble(commandList[2]));
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Racer {0} was in PitLane New fuel load: {1} Tires: {2}", racerInPitLane.Name, Math.Round(racerInPitLane.Car.ActualFuel), newTires);
+            Console.WriteLine("Racer {0} was in pitLane - New fuel load: {1}l Tires: {2} (Crew time: {3}s, Maintain time {4}s)", racerInPitLane.Name, Math.Round(racerInPitLane.Car.ActualFuel), Circuit.PitLane.NewTires, Helper.TimeSpanToStringSec(Circuit.PitLane.PitLaneCrewTime), Helper.TimeSpanToStringSec(Circuit.PitLane.MaintainTime));
             Console.ForegroundColor = ConsoleColor.Gray;
         }
 
@@ -120,7 +95,7 @@ namespace NascarRace
             foreach (var racer in Grid)
             {
                 var position = Grid.FindIndex(a => a.Name == racer.Name);
-                Console.WriteLine($"{position + 1}. {racer.ID} - {racer.Name}, TotalTime: {Helper.TimeSpanToString(racer.TotalTime)}, Average Form: {Math.Round(racer.CubeThrows.Average(),2)}, BonusTimeIndex: {Helper.TimeInDoubleToString(racer.PenaltyTimeStack)}");
+                Console.WriteLine($"{position + 1}. {racer.ID} - {racer.Name}, TotalTime: {Helper.TimeSpanToStringMinutes(racer.TotalTime)}, Average Form: {Math.Round(racer.CubeThrows.Average(),2)}, BonusTimeIndex: {Helper.TimeInDoubleToString(racer.PenaltyTimeStack)}");
             }
             Console.ForegroundColor = ConsoleColor.Gray;
         }
@@ -136,7 +111,7 @@ namespace NascarRace
             foreach (var racer in Grid)
             {
                 var position = Grid.FindIndex(a => a.Name == racer.Name);
-                Console.WriteLine($"{position + 1}. {racer.ID} - {racer.Name}, TotalTime: {Helper.TimeSpanToString(racer.TotalTime)} F:{Math.Round(racer.Car.ActualFuel,1)}l {racer.Car.Tires} - {racer.Car.Tires.TireWear}% - maxSpeed: {racer.Car.ActualMaxSpeed} - FSR: {racer.Car.FuelPerformanceReduction}  TSR: {racer.Car.TiresPerformanceReduction}");
+                Console.WriteLine($"{position + 1}. {racer.ID} - {racer.Name}, TotalTime: {Helper.TimeSpanToStringMinutes(racer.TotalTime)} F:{Math.Round(racer.Car.ActualFuel,1)}l {racer.Car.Tires} - {racer.Car.Tires.TireWear}% - maxSpeed: {racer.Car.ActualMaxSpeed} - FSR: {racer.Car.FuelPerformanceReduction}  TSR: {racer.Car.TiresPerformanceReduction}");
             }
             Console.ForegroundColor = ConsoleColor.Gray;
         }
@@ -150,7 +125,7 @@ namespace NascarRace
 
             foreach (var racer in Grid)
             {
-                Console.WriteLine($"{racer.ID} - {racer.Name}, LapTime: {Helper.TimeSpanToString(racer.LapTime)} ({racer.ActualForm})");
+                Console.WriteLine($"{racer.ID} - {racer.Name}, LapTime: {Helper.TimeSpanToStringMinutes(racer.LapTime)} ({racer.ActualForm})");
             }
         }
 

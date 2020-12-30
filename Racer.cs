@@ -35,7 +35,6 @@ namespace NascarRace
 
         public TimeSpan Drive(Circuit circuit)
         {
-
             Car.UseTire(circuit.Length);
             Car.UseFuel(circuit.Length);
 

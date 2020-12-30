@@ -6,9 +6,13 @@ namespace NascarRace
 {
     public static class Helper
     {
-        public static string TimeSpanToString(TimeSpan time)
+        public static string TimeSpanToStringMinutes(TimeSpan time)
         {
             return $@"{time:mm\:ss\.ff}";
+        }
+        public static string TimeSpanToStringSec(TimeSpan time)
+        {
+            return $@"{time:ss\.ff}";
         }
 
         public static string TimeInDoubleToString(double time)
