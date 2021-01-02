@@ -7,6 +7,7 @@ namespace NascarRace
     {
         public int MaxFuel { get; set; }
         public double ActualFuel { get; set; }
+        public double FuelWeightSpeedPenaltyOn1L { get; set; }
         public Tires.Tires Tires { get; set; }
         public double BasicSpeed { get; set; }
         public double ActualMaxSpeed { get; set; }
@@ -18,11 +19,12 @@ namespace NascarRace
         public Car(double actualFuel, Tires.Tires tires, int basicSpeed)
         {
             MaxFuel = 50;
+            FuelWeightSpeedPenaltyOn1L = 0.1;
             ActualFuel = actualFuel;
             Tires = tires;
             BasicSpeed = basicSpeed;
             ActualMaxSpeed = basicSpeed + tires.SpeedModifier;
-            FuelUsagePer1Km = 0.89;
+            FuelUsagePer1Km = 0.9;
             IsOutOfFuel = false;
         }
 
@@ -47,19 +49,8 @@ namespace NascarRace
             Tires.CheckForPuncture();
 
             if (Tires.IsPunctured) return;
-            switch (Tires)
-            {
-                case HardTires _:
-                    Tires.TireWear -= circuitLength / 1000.0;
-                    break;
-                case MediumTires _:
-                    Tires.TireWear -= circuitLength / 1000.0 * 1.8;
-                    break;
-                case SoftTires _:
-                    Tires.TireWear -= circuitLength / 1000 * 3;
-                    break;
-            }
-            Tires.TireWear = Math.Round(Tires.TireWear);
+
+            Tires.TireWear -= Tires.TireWearPer3km;
         }
     }
 }

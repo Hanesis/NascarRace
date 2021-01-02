@@ -38,6 +38,7 @@ namespace NascarRace
                     break;
             }
             racer.Car.Tires = NewTires;
+            racer.Car.TiresPerformanceReduction = 0;
         }
 
         public void LoadFuel(Racer racer, double fuelLoad)
@@ -57,12 +58,13 @@ namespace NascarRace
             var cube = new Cube();
             
             PitLaneCrewTime = TimeSpan.FromSeconds(cube.Roll(5, 9));
-            MaintainTime = TimeSpan.FromSeconds(fuelLoad / 1.5);
+            PitLaneCrewTime = TimeSpan.FromSeconds(7);
+            MaintainTime = TimeSpan.FromSeconds(fuelLoad / 1.8);
 
-            if (MaintainTime <= TimeSpan.FromSeconds(8))
+            if (MaintainTime <= TimeSpan.FromSeconds(10))
             {
-                racer.LapTime += TimeSpan.FromSeconds(8) + PitLaneCrewTime + PitLaneEnterTime;
-                racer.TotalTime += TimeSpan.FromSeconds(8) + PitLaneCrewTime + PitLaneEnterTime;
+                racer.LapTime += TimeSpan.FromSeconds(10) + PitLaneCrewTime + PitLaneEnterTime;
+                racer.TotalTime += TimeSpan.FromSeconds(10) + PitLaneCrewTime + PitLaneEnterTime;
             }
             else
             {

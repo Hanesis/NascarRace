@@ -6,7 +6,9 @@
         {
             TireWear = 100;
             UsedLaps = 0;
-            SpeedModifier = 27;
+            SpeedModifier = 24;
+            TireWearPer3km = 3;
+            TireSpeedMofierPer3km = 2;
             IsPunctured = false;
         }
 

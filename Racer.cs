@@ -35,19 +35,17 @@ namespace NascarRace
 
         public TimeSpan Drive(Circuit circuit)
         {
-            Car.UseTire(circuit.Length);
-            Car.UseFuel(circuit.Length);
-
-            ApplyFuelWightSpeedPenalty();
+            var lapTimeRaw = GetBaseRawLapTime(circuit.Length);
+            //lapTimeRaw = ApplyActualFormIndex(lapTimeRaw);
             ApplyTireWearSpeedPenalty();
             CalculateActualMaxSpeed(circuit.Length);
 
-            var lapTimeRaw = GetBaseRawLapTime(circuit.Length);
-            lapTimeRaw = ApplyActualFormIndex(lapTimeRaw);
             var lapTime = Helper.RawToTimeSpan(lapTimeRaw);
-
             LapTime = lapTime;
             TotalTime += lapTime;
+
+            Car.UseTire(circuit.Length);
+            Car.UseFuel(circuit.Length);
 
             return lapTime;
         }
@@ -62,7 +60,7 @@ namespace NascarRace
         }
         private void CalculateActualMaxSpeed(int lapLength)
         {
-            Car.ActualMaxSpeed = Car.BasicSpeed + Car.Tires.SpeedModifier - Car.TiresPerformanceReduction - Car.FuelPerformanceReduction;
+            Car.ActualMaxSpeed = Car.BasicSpeed + Car.Tires.SpeedModifier - Car.TiresPerformanceReduction;
             Car.ActualMaxSpeed = Math.Round(Car.ActualMaxSpeed, 1);
 
             if (Car.ActualMaxSpeed < Car.BasicSpeed)
@@ -84,20 +82,22 @@ namespace NascarRace
             }
         }
 
-        private void ApplyFuelWightSpeedPenalty()
+        private double ApplyFuelWeightSpeedPenalty()
         {
-            Car.FuelPerformanceReduction = Math.Round(Car.ActualFuel / 5, 2);
+            return Math.Round(Car.ActualFuel * Car.FuelWeightSpeedPenaltyOn1L/3600, 5);
         }
 
         private void ApplyTireWearSpeedPenalty()
         {
-            Car.TiresPerformanceReduction = Math.Round(Car.Tires.SpeedModifier / Car.Tires.TireWear * 6.5, 3);
-            
+            Car.TiresPerformanceReduction += Car.Tires.TireSpeedMofierPer3km;
         }
 
         private double GetBaseRawLapTime(int lapLength)
         {
-            return lapLength / 1000.0 / Car.ActualMaxSpeed;
+            var fuelWeightSpeedPenalty = ApplyFuelWeightSpeedPenalty();
+            var baseLapTime = lapLength / 1000.0 / Car.ActualMaxSpeed;
+
+            return baseLapTime + fuelWeightSpeedPenalty;
         }
     }
 }

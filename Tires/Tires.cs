@@ -5,7 +5,8 @@ namespace NascarRace.Tires
     class Tires
     {
         public double TireWear { get; set; }
-        public int TireWearPer1km { get; set; }
+        public int TireWearPer3km { get; set; }
+        public int TireSpeedMofierPer3km { get; set; }
         public int UsedLaps { get; set; }
         public int SpeedModifier { get; set; }
         public bool IsPunctured { get; set; }
